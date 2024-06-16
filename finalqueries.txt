@@ -1,0 +1,45 @@
+Q1.) SELECT Customer.FirstName, Customer.LastName, Invoice.BillingPostalCode, COUNT(Invoice.Total) AS Inv_Tot
+FROM Invoice
+JOIN Customer
+ON Invoice.CustomerId = Customer.CustomerId
+JOIN InvoiceLine
+ON InvoiceLine.InvoiceId = Invoice.InvoiceId
+GROUP BY Invoice.Total
+ORDER BY Total DESC
+LIMIT 3
+
+Q2.) SELECT Track.Composer TC, COUNT(Invoice.Total) AS IT
+FROM Genre
+JOIN Track
+ON Track.GenreId = Genre.GenreId
+JOIN InvoiceLine
+ON InvoiceLine.TrackId = Track.TrackId
+JOIN Invoice
+ON Invoice.InvoiceId = InvoiceLine.InvoiceId
+WHERE Genre.Name like 'Classical'
+GROUP BY TC
+ORDER BY IT
+LIMIT 5
+
+
+Q3.) SELECT Album.Title, Genre.Name, SUM(InvoiceLine.Quantity) AS InvoiceLine_Qty
+FROM Genre
+JOIN Track
+ON Genre.GenreId = Track.GenreId
+JOIN InvoiceLine
+ON Track.TrackId = InvoiceLine.TrackId
+JOIN Album
+ON Album.AlbumId = Track.AlbumId
+GROUP BY Album.Title, Genre.Name
+ORDER BY InvoiceLine_Qty DESC
+LIMIT 5
+
+
+Q4.) SELECT MediaType.MediaTypeId MT, MediaType.Name MN, COUNT(MediaType.MediaTypeId) AS Invoice_count
+FROM MediaType
+JOIN Track
+ON MediaType.MediaTypeId = Track.MediaTypeId
+JOIN InvoiceLine
+ON InvoiceLine.TrackId = Track.TrackId
+GROUP BY MT
+ORDER BY MN DESC
